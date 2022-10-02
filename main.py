@@ -1,16 +1,18 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import pandas as pd
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def get_data_train():
+    data_train = pd.read_csv('./dataset/train.csv', encoding='gbk')
+    print('training dataset shape: ', data_train.shape)
+    return data_train
 
 
-# Press the green button in the gutter to run the script.
+def get_data_test():
+    data_test = pd.read_csv('./dataset/test.csv', encoding='gbk')
+    print('testing dataset shape: ', data_test.shape)
+    return data_test
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    get_data_train()
+    get_data_test()
