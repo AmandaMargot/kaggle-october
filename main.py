@@ -1,5 +1,7 @@
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def get_data_train():
@@ -34,7 +36,7 @@ def get_label_analysis(data):
 
     # 训练集中的标签与与哪一个特征最相关
     print("===获取训练集标签与特征相关系数===")
-    print(data.corr()['Transported']) # 和 RoomService最相关（负相关）
+    print(data.corr()['Transported'])  # 和 RoomService最相关（负相关）
 
 
 def get_missing_data_analysis(data):
@@ -43,12 +45,41 @@ def get_missing_data_analysis(data):
     rate_list = []
     for i in list(data.columns):
         num = data[i].isnull().sum()
-        rate = num/len(data)
+        rate = num / len(data)
         feature_list.append(i)
         num_list.append(num)
         rate_list.append(rate)
     missing_data_analysis = pd.DataFrame({'训练集': feature_list, '缺失值个数': num_list, '缺失率': rate_list})
     print(missing_data_analysis)
+
+
+def data_visualization(data):
+    # HomePlanet 与 Transported 的分布关系
+    cat_plot_bar(data, "HomePlanet", "Transported",
+                 "Distribution between HomePlanet and Transported")  # Europa > Mars > Earth
+    # CryoSleep 与 Transported 的分布关系
+    cat_plot_bar(data, "CryoSleep", "Transported", "Distribution between CryoSleep and Transported")  # True > False
+    # # Cabin 与 Transported 的分布关系
+    # Todo
+    # Destination 与 Transported 的分布关系
+    cat_plot_bar(data, "Destination", "Transported",
+                 "Distribution between Destination and Transported")  # 55 > PSO > TRAPPIST
+    # Age 与 Transported 的分布关系
+    # Todo
+    # VIP 与 Transported 的分布关系
+    cat_plot_bar(data, "VIP", "Transported",
+                 "Distribution between VIP and Transported") # False > True
+
+    # RoomService、FoodCourt、ShoppingMall、Spa、VRDeck 与 Transported 的分布关系
+    # Todo
+    # Name 与 Transported 的分布关系
+    # Todo
+
+
+def cat_plot_bar(data, x, y, title):
+    plot = sns.catplot(kind="bar", x=x, y=y, data=data, height=8, aspect=.8)
+    plot.fig.suptitle(title)
+    plt.show()
 
 
 if __name__ == '__main__':
@@ -75,4 +106,5 @@ if __name__ == '__main__':
     print("===获取测试集缺失值分布===")
     get_missing_data_analysis(train_data)
 
-
+    # 可视化
+    data_visualization(train_data)
